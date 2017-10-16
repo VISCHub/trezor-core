@@ -49,6 +49,9 @@ bool flash_lock(void);
 bool flash_erase_sectors(const uint8_t *sectors, int len, void (*progress)(int pos, int len));
 bool flash_write_byte(uint32_t address, uint8_t data);
 bool flash_write_word(uint32_t address, uint32_t data);
+bool flash_write_byte_rel(uint32_t sector, uint32_t offset, uint8_t data);
+bool flash_write_word_rel(uint32_t sector, uint32_t offset, uint32_t data);
+bool flash_read_word_rel(uint32_t sector, uint32_t offset, uint32_t *data);
 
 #define FLASH_OTP_NUM_BLOCKS      16
 #define FLASH_OTP_BLOCK_SIZE      32
