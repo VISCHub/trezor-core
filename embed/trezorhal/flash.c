@@ -1,6 +1,14 @@
+/*
+ * Copyright (c) Pavol Rusnak, Jan Pochyla, SatoshiLabs
+ *
+ * Licensed under TREZOR License
+ * see LICENSE file for details
+ */
+
 #include STM32_HAL_H
 
 #include <string.h>
+
 #include "flash.h"
 
 // see docs/memory.md for more information
@@ -51,6 +59,19 @@ bool flash_lock(void)
 {
     HAL_FLASH_Lock();
     return true;
+}
+
+const void *flash_get_address(uint8_t sector, uint32_t offset, uint32_t size)
+{
+    if (sector >= SECTOR_COUNT) {
+        return NULL;
+    }
+    uint32_t addr = SECTOR_TABLE[sector];
+    uint32_t next = SECTOR_TABLE[sector + 1];
+    if (offset + size > next - addr) {
+        return NULL;
+    }
+    return (const uint8_t *)addr + offset;
 }
 
 bool flash_erase_sectors(const uint8_t *sectors, int len, void (*progress)(int pos, int len))
