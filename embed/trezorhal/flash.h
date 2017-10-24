@@ -39,7 +39,7 @@
 //                                          23
 #define FLASH_SECTOR_FIRMWARE_EXTRA_END     23
 
-int flash_init(void);
+bool flash_init(void);
 
 void flash_set_option_bytes(void);
 
